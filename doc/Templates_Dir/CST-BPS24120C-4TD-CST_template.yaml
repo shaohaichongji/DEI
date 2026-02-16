@@ -1,0 +1,236 @@
+schema:
+  name: ss_light_controller_template
+  version: 0.1
+
+template_info:
+  template_id: cst_001
+  factory: 东莞康视达(CST)自动化科技有限公司
+  controller_model: CST-BPS24120C-4TD-CST
+  controller_type: CSTSharpFlashLightCtrl               # 建议这里别用中文，UI显示用 display_name
+  controller_type_display_name: 爆闪控制器
+  channel_max: 4
+
+  connect_type:
+    - SERIAL
+    - SOCKET
+
+  protocol_type: STRING                 # STRING / BYTE
+
+parameter_info:
+  PulseWidthTime:
+    location: CHANNEL                   # GLOBAL / CHANNEL
+    display_name: 点亮脉宽时间(us)
+    value_type: INT                     # INT / DOUBLE / BOOL / STRING / ENUM / BYTES ...
+    default_value: 100                  # 再放一份，core解析更方便
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 999]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE                   # ON_CHANGE / ON_COMMIT / MANUAL
+      commit: SAVE_AND_SEND             # SEND_ONLY / SAVE_ONLY / SAVE_AND_SEND
+      cmd_template: "S<channel><value>#"
+      placeholders:
+        channel:
+          source: channel_num
+          endian: false                 # STRING 下无意义，留着
+          parser_tool: NumberToUpperAlpha
+          extra_param:
+            - true
+        value:
+          source: param_value
+          endian: false
+          parser_tool: NumberToFixedDec
+          extra_param:
+            - 4
+
+  LightSourceOutputDelayTime:
+    location: CHANNEL
+    display_name: 光源输出延时(us)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 999]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: DL<channel><value>#
+      placeholders:
+        channel:
+          source: channel_num
+          paser_tool: NumberToUpperAlpha
+          extra_param:
+            - true
+        value:
+          source: param_value
+          paser_tool: NumberToFixedDec
+          extra_param:
+            - 4
+
+  CameraSignalDelayTime:
+    location: CHANNEL
+    display_name: 相机信号延时(us)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 999]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: DC<channel><value>#
+      placeholders:
+        channel:
+          source: channel_num
+          paser_tool: NumberToUpperAlpha
+          extra_param:
+            - true
+        value:
+          source: param_value
+          paser_tool: NumberToFixedDec
+          extra_param:
+            - 4
+
+  InternalTriggerCycle:
+    location: GLOBAL
+    display_name: 内部触发周期(ms)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 999]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: ST<value>#
+      placeholders:
+        value:
+          source: param_value
+          paser_tool: NumberToFixedDec
+          extra_param:
+            - 4
+
+  TriggerMode:
+    location: GLOBAL
+    display_name: 触发模式
+    value_type: STRING
+    default_value: 内触发
+
+    widget_config:
+      type: COMBO_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 内触发
+      range: []
+      step: 0
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: [内触发,外触发]
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: TR<value>#
+      placeholders:
+        value:
+          source: param_value
+          paser_tool: GetStringMapValue
+          extra_param:
+            - 内触发<1>
+            - 外触发<0>
+
+  CameraSignal:
+    location: GLOBAL
+    display_name: 相机信号
+    value_type: STRING
+    default_value: 上升沿
+
+    widget_config:
+      type: COMBO_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 上升沿
+      range: []
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: [上升沿, 下降沿]
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: CT<value>#
+      placeholders:
+        value:
+          source: param_value
+          paser_tool: GetStringMapValue
+          extra_param:
+            - 上升沿<1>
+            - 下降沿<0>
+
+# 保留：未来支持更复杂的展示/排序/分组策略时再用
+ui_hints:
+  global_panel:
+    order: []
+  channel_panel:
+    order: []

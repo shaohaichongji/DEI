@@ -1,0 +1,626 @@
+schema:
+  name: ss_light_controller_template
+  version: 0.1
+
+template_info:
+  template_id: cst_002
+  factory: 东莞康视达(CST)自动化科技有限公司
+  controller_model: CST-CPL2496B-4TD
+  controller_type: CSTConstantCurrentLightCtrl               # 建议这里别用中文，UI显示用 display_name
+  controller_type_display_name: 恒流光源控制器
+  channel_max: 4
+
+  connect_type:
+    - SERIAL
+
+  protocol_type: BYTE                 # STRING / BYTE
+
+  byte_transmission_params:
+    message_header_type: EMPTY
+    tail_check_type: crc_16_modbus
+    device_address: 0x01
+    crc_endian: false
+
+parameter_info:
+  LightLevel:
+    location: CHANNEL                   # GLOBAL / CHANNEL
+    display_name: 亮度调节
+    value_type: INT                     # INT / DOUBLE / BOOL / STRING / ENUM / BYTES ...
+    default_value: 100                  # 再放一份，core解析更方便
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 255]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE                   # ON_CHANGE / ON_COMMIT / MANUAL
+      commit: SAVE_AND_SEND             # SEND_ONLY / SAVE_ONLY / SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x00
+
+  TriggerPulseWidth:
+    location: CHANNEL
+    display_name: 触发脉宽(us)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 255]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0010
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x01
+
+  MaxCurrent:
+    location: CHANNEL
+    display_name: 通道最大电流(mA)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1, 255]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0030
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x02
+
+  RunningStatus:
+    location: CHANNEL
+    display_name: 通道工作状态
+    value_type: STRING
+    default_value: 打开
+
+    widget_config:
+      type: COMBO_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 打开
+      range: []
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: [关闭,打开]
+
+    parameter_commands:
+      scope: CHANNEL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0040
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: GetStringMapValueToBytes
+          extra_param:
+            - 打开<0x0001>
+            - 关闭<0x0000>
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x00
+
+  TriggerDelayTime:
+    location: GLOBAL
+    display_name: 触发延迟(us)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [0,65535]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0220
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x02
+
+  HighlightPulseWidth:
+    location: GLOBAL
+    display_name: 高亮触发脉宽(us)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [1,999]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0020
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x02
+
+  SoftwareTriggerTime:
+    location: GLOBAL
+    display_name: 软件触发时间(ms)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [0,65535]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: channel_num
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x00D0
+            - 0
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x01
+
+  RunningMode:
+    location: GLOBAL
+    display_name: 控制器工作模式
+    value_type: STRING
+    default_value: 内部触发
+
+    widget_config:
+      type: COMBO_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 内部触发
+      range: []
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: [常亮,频闪,外部触发,内部触发,软件触发]
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x0051
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: GetStringMapValueToBytes
+          extra_param:
+            - 常亮<0x0000>
+            - 频闪<0x0001>
+            - 外部触发<0x0002>
+            - 内部触发<0x0003>
+            - 软件触发<0x0004>
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x00
+
+  AutoStrobeFrequency:
+    location: GLOBAL
+    display_name: 自动频闪频率(Hz)
+    value_type: INT
+    default_value: 100
+
+    widget_config:
+      type: SPIN_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 100
+      range: [0,65535]
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x0081
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: ByteConversion
+          extra_param:
+            - 2
+            - 0x0000
+            - 0
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x02
+
+  PowerOutageBackup:
+    location: GLOBAL
+    display_name: 断电备份
+    value_type: STRING
+    default_value: 断电后备份
+
+    widget_config:
+      type: COMBO_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: 断电后备份
+      range: []
+      step: 1
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: [断电后备份,断电后不备份]
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x0101
+        RegisterValue:
+          source: param_value
+          endian: true
+          paser_tool: GetStringMapValueToBytes
+          extra_param:
+            - 断电后不备份<0x0000>
+            - 断电后备份<0x0001>
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x00
+
+  HeartbeatPacket:
+    location: GLOBAL
+    display_name: 心跳包功能启用
+    value_type: BOOL
+    default_value: false
+
+    widget_config:
+      type: CHECK_BOX
+      enabled: true
+      visible: true
+      read_only: false
+      tooltip: ""
+      default_value: false
+      range: []
+      step: 0
+      decimals: 0
+      text_max_length: 0
+      placeholder: ""
+      options: []
+
+    parameter_commands:
+      scope: GLOBAL
+      when: ON_CHANGE
+      commit: SAVE_AND_SEND
+      cmd_template: <FunctionCode><RegisterAddress><RegisterValue><Subfunction>
+      placeholders:
+        FunctionCode:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x06
+        RegisterAddress:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x01A1
+        RegisterValue:
+          source: empty
+          endian: true
+          paser_tool: GetRawData
+          extra_param:
+            - 0x0000
+        Subfunction:
+          source: param_value
+          endian: true
+          paser_tool: GetStringMapValueToBytes
+          extra_param:
+            - true<01>
+            - false<00>
+
+# 保留：未来支持更复杂的展示/排序/分组策略时再用
+ui_hints:
+  global_panel:
+    order: []
+  channel_panel:
+    order: []

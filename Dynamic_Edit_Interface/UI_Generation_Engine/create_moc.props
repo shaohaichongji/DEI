@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuild>
+      <Command>$(ProjectDir)..\..\CommonLibrary\Qt\bin\moc.exe $(ProjectDir)\%(Filename).h -o $(ProjectDir)\moc\moc_%(Filename).cpp
+</Command>
+    </CustomBuild>
+    <CustomBuild>
+      <Outputs>$(ProjectDir)\moc\moc_%(Filename).cpp;$(ProjectDir)\moc\moc_ss_interface_ui.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

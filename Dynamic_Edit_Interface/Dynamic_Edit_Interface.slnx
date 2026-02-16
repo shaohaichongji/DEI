@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Communication_Library/Communication_Library.vcxproj" Id="bc6204b4-b4fd-4116-abd4-0efe793f68de" />
+  <Project Path="Dynamic_Edit_Interface/Dynamic_Edit_Interface.vcxproj" Id="136fc3be-cadd-4675-b546-657045b1929c">
+    <BuildDependency Project="Communication_Library/Communication_Library.vcxproj" />
+    <BuildDependency Project="Parsing_Engine/Parsing_Engine.vcxproj" />
+    <BuildDependency Project="UI_Generation_Engine/UI_Generation_Engine.vcxproj" />
+  </Project>
+  <Project Path="Parsing_Engine/Parsing_Engine.vcxproj" Id="f023aaae-2fe9-4233-88d1-ab1bdb53dfab">
+    <BuildDependency Project="Communication_Library/Communication_Library.vcxproj" />
+  </Project>
+  <Project Path="UI_Generation_Engine/UI_Generation_Engine.vcxproj" Id="93b409c3-6800-4865-a002-5ae6b406c777">
+    <BuildDependency Project="Parsing_Engine/Parsing_Engine.vcxproj" />
+  </Project>
+</Solution>

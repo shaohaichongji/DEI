@@ -1,0 +1,11 @@
+# ==== Build output ====
+bin/
+lib/
+
+# ==== Visual Studio ====
+.vs/
+x64/
+
+# ==== Qt ====
+moc_*/
+moc/
