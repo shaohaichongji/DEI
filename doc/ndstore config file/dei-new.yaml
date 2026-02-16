@@ -1,0 +1,248 @@
+totality_layout:
+  grandfather_widget:
+    location: 0
+    layout:
+      rows: 0
+      cols: 1
+      row_span: 3
+      column_span: 4
+      type: 2
+      combine_mode: 0
+      is_scroll: true
+    childrens:
+      - father1_widget
+      - father2_widget
+    nodes:
+      father1_widget:
+        location: 0/0
+        layout:
+          rows: 4
+          cols: 6
+          row_span: 11
+          column_span: 13
+          type: 32
+          combine_mode: 24
+          is_scroll: true
+        childrens:
+          - son1_widget
+          - son2_widget
+        nodes:
+          son1_widget:
+            location: 0/0/0
+            layout:
+              rows: 32
+              cols: 1
+              row_span: 1
+              column_span: 1
+              type: 44
+              combine_mode: 2
+              is_scroll: true
+            childrens:
+              - ~
+            nodes:
+              - ~
+          son2_widget:
+            location: 0/0/1
+            layout:
+              rows: 5
+              cols: 2
+              row_span: 1
+              column_span: 3
+              type: 1
+              combine_mode: 2
+              is_scroll: true
+            childrens:
+              - ~
+            nodes:
+              - ~
+      father2_widget:
+        location: 0/1
+        layout:
+          rows: 02
+          cols: 0
+          row_span: 12
+          column_span: 45
+          type: 1
+          combine_mode: 6
+          is_scroll: true
+        childrens:
+          - son1_widget
+          - son2_widget
+        nodes:
+          son1_widget:
+            location: 0/1/0
+            layout:
+              rows: 32
+              cols: 11
+              row_span: 1
+              column_span: 12
+              type: 1
+              combine_mode: 2
+              is_scroll: true
+            childrens:
+              - ~
+            nodes:
+              - ~
+          son2_widget:
+            location: 0/1/1
+            layout:
+              rows: 54
+              cols: 02
+              row_span: 1
+              column_span: 1
+              type: 1
+              combine_mode: 2
+              is_scroll: true
+            childrens:
+              - ~
+            nodes:
+              - ~
+widget_library:
+  grandfather_widget<0>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: grandfather_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget
+    business_data:
+  father1_widget<0/0>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: father1_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget/father1_widget
+    business_data: 
+  father2_widget<0/1>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: father2_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget/father2_widget
+    business_data: 
+  son1_widget<0/0/0>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: son1_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget/father1_widget/son1_widget
+    business_data:
+  son2_widget<0/0/1>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: son2_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget/father1_widget/son2_widget
+    business_data:
+  son1_widget<0/1/0>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: son1_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget/father2_widget/son1_widget
+    business_data: 
+  son2_widget<0/1/1>:
+    dei_ui_data:
+      parent: "null"
+      ui_type: region
+      name: son2_widget
+      show_text: ""
+      default_text: ""
+      is_visibale: true
+      is_abailable: true
+      value: 0
+      margin: 5
+      max: ""
+      min: ""
+      default_range: []
+      fill_widget_name: ""
+      style:
+        value: ""
+      action:
+        - ~
+    location_ptr: grandfather_widget/father2_widget/son2_widget
+    business_data:
+data_repositorie:

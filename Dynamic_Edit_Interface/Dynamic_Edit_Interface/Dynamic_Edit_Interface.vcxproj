@@ -142,6 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ss_dei_agent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ss_dei_agent.h" />
+    <ClInclude Include="ss_ndstore.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
