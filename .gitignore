@@ -1,6 +1,6 @@
 # ==== Build output ====
-bin/
-lib/
+/bin/
+/lib/
 
 # ==== Visual Studio ====
 .vs/
