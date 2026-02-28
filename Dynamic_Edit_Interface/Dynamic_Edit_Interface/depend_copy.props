@@ -5,7 +5,8 @@
     <PreBuildEvent>
       <Command>xcopy /e /r /y "$(ProjectDir)..\..\CommonLibrary\Qt\bin\$(Configuration)\" "$(OutDir)"
 xcopy /e /r /y "$(ProjectDir)..\..\CommonLibrary\translations\" "$(OutDir)\translations\"
-xcopy /e /r /y "$(ProjectDir)..\..\CommonLibrary\yaml\bin\$(Configuration)\" "$(OutDir)"</Command>
+xcopy /e /r /y "$(ProjectDir)..\..\CommonLibrary\yaml\bin\$(Configuration)\" "$(OutDir)"
+xcopy /e /r /y "$(ProjectDir)..\..\doc\Templates_Dir\" "$(OutDir)Config\Templates_Dir\"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
