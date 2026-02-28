@@ -26,7 +26,7 @@
 #include <vector>
 #include <stdexcept>
 
-#include "instant/compile_depend/ss_yaml.h"
+#include "../../include/ss_yaml_depend.h"
 
 namespace ndstore {
 
@@ -198,7 +198,8 @@ namespace ndstore {
         NDStore()
             : root_(std::make_unique<Node>())
             , index_all_prefixes_(true)
-        {}
+        {
+        }
 
         // ---------- 写入：Upsert（创建或覆盖值，同时维护索引） ----------
 

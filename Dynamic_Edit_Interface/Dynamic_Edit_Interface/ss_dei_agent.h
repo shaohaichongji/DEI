@@ -1,10 +1,10 @@
 #pragma once
-#include "instant/compile_depend/ss_yaml.h"
+#include "../../include/ss_yaml_depend.h"
 
 #include <string>
 #include <vector>
 
-// DLL µ¼³ö/µ¼Èëºê£¨¹¹½¨ UI DLL Ê±µ¼³ö£¬·ñÔò×÷ÎªÊ¹ÓÃ·½µ¼Èë£©
+// DLL å¯¼å‡º/å¯¼å…¥å®ï¼ˆæ„å»º UI DLL æ—¶å¯¼å‡ºï¼Œå¦åˆ™ä½œä¸ºä½¿ç”¨æ–¹å¯¼å…¥ï¼‰
 #ifdef SS_API_EXPORT_UI
 #  define SS_EXPORT_UI __declspec(dllexport)
 #else
@@ -19,44 +19,44 @@ namespace ndstore {
     class NDStore;
 }
 
-// DEI ½âÎö/¹¹½¨´úÀí£º¸ºÔğ´Ó²å¼ş YAML ÅäÖÃÖĞ½âÎö²¼¾ÖÊ÷£¬²¢¹¹½¨ NDStore ´æ´¢µÄ UI ½á¹¹Ê÷
+// DEI è§£æ/æ„å»ºä»£ç†ï¼šè´Ÿè´£ä»æ’ä»¶ YAML é…ç½®ä¸­è§£æå¸ƒå±€æ ‘ï¼Œå¹¶æ„å»º NDStore å­˜å‚¨çš„ UI ç»“æ„æ ‘
 class SS_EXPORT_UI SS_DEIAgent
 {
 public:
-    // ¹¹Ôì£º´«Èë²å¼şÃûÓë²å¼şÅäÖÃÎÄ¼şÂ·¾¶£¨ÓÃÓÚ¶¨Î»¶ÔÓ¦ YAML£©
+    // æ„é€ ï¼šä¼ å…¥æ’ä»¶åä¸æ’ä»¶é…ç½®æ–‡ä»¶è·¯å¾„ï¼ˆç”¨äºå®šä½å¯¹åº” YAMLï¼‰
     SS_DEIAgent(const std::string& plugin_name,
         const std::string& plugin_file_path);
-    // Îö¹¹£ºÊÍ·ÅÄÚ²¿×ÊÔ´
+    // ææ„ï¼šé‡Šæ”¾å†…éƒ¨èµ„æº
     ~SS_DEIAgent();
 
-    // ³õÊ¼»¯£º¶ÁÈ¡ YAML£¬¹¹½¨ NDStore µÄ UI Ê÷
+    // åˆå§‹åŒ–ï¼šè¯»å– YAMLï¼Œæ„å»º NDStore çš„ UI æ ‘
     void InitUITree();
 
 private:
-    // ´Ó totality_layout ¸ù¿ªÊ¼±éÀúÕû¿Ã²¼¾ÖÊ÷
+    // ä» totality_layout æ ¹å¼€å§‹éå†æ•´æ£µå¸ƒå±€æ ‘
     void TraverseTotalityLayout(const YAML::Node& totalityLayout);
 
-    // µİ¹é±éÀúµ¥¸ö½Úµã¼°Æä×Ó½Úµã
-    // parentPath: ´Ó¸ùµ½¡°µ±Ç°½Úµã¸¸½Úµã¡±µÄÂ·¾¶£¨×Ö·û´®Êı×é£©
-    // name: µ±Ç°½ÚµãÃû£¨ÀıÈç father1_widget£©
-    // nodesMap: µ±Ç°²ãµÄ nodes Ó³Éä£¨name -> ½Úµã¶¨Òå£©
+    // é€’å½’éå†å•ä¸ªèŠ‚ç‚¹åŠå…¶å­èŠ‚ç‚¹
+    // parentPath: ä»æ ¹åˆ°â€œå½“å‰èŠ‚ç‚¹çˆ¶èŠ‚ç‚¹â€çš„è·¯å¾„ï¼ˆå­—ç¬¦ä¸²æ•°ç»„ï¼‰
+    // name: å½“å‰èŠ‚ç‚¹åï¼ˆä¾‹å¦‚ father1_widgetï¼‰
+    // nodesMap: å½“å‰å±‚çš„ nodes æ˜ å°„ï¼ˆname -> èŠ‚ç‚¹å®šä¹‰ï¼‰
     void TraverseOneNode(const std::vector<std::string>& parentPath,
         const std::string& name,
         const YAML::Node& nodesMap);
 
-    // Êµ¼Ê¡°´¦ÀíÒ»¸ö½Úµã¡±µÄÂß¼­£º
-    // - ²éÕÒ widget_library ÖĞ¸Ã½Úµã¶ÔÓ¦µÄ¶¨Òå
-    // - ×é×° WidgetFeature/Value
-    // - Ğ´Èë NDStore£¨²¢¿ÉÄÜ¸½´ø±£´æ¶ÔÓ¦ YAML::Node£©
+    // å®é™…â€œå¤„ç†ä¸€ä¸ªèŠ‚ç‚¹â€çš„é€»è¾‘ï¼š
+    // - æŸ¥æ‰¾ widget_library ä¸­è¯¥èŠ‚ç‚¹å¯¹åº”çš„å®šä¹‰
+    // - ç»„è£… WidgetFeature/Value
+    // - å†™å…¥ NDStoreï¼ˆå¹¶å¯èƒ½é™„å¸¦ä¿å­˜å¯¹åº” YAML::Nodeï¼‰
     void ProcessOneNode(const std::vector<std::string>& parentPath,
         const std::string& name,
         const YAML::Node& childNode);
 
-    // ½«µ±Ç° NDStore µÄ UI Ê÷ÒÔ¿É¶ÁĞÎÊ½Êä³öµ½ÎÄ¼ş£¨ÓÃÓÚµ÷ÊÔ/ºË¶Ô£©
+    // å°†å½“å‰ NDStore çš„ UI æ ‘ä»¥å¯è¯»å½¢å¼è¾“å‡ºåˆ°æ–‡ä»¶ï¼ˆç”¨äºè°ƒè¯•/æ ¸å¯¹ï¼‰
     void DumpNDStoreToFile(const ndstore::NDStore* store, const std::string& filepath);
 
 private:
-    YAML::Node dei_tree_node_;           // Õû¿Ã YAML ÅäÖÃÊ÷£¨¸ù½Úµã£©
-    ndstore::NDStore* dei_tree_ = nullptr; // NDStore ´æ´¢µÄ UI ½á¹¹Ê÷£¨ÓÉÊµÏÖ²à¸ºÔğ´´½¨/ÊÍ·Å£©
-    std::string dei_file_path_;          // DEI/YAML ÎÄ¼şÂ·¾¶
+    YAML::Node dei_tree_node_;           // æ•´æ£µ YAML é…ç½®æ ‘ï¼ˆæ ¹èŠ‚ç‚¹ï¼‰
+    ndstore::NDStore* dei_tree_ = nullptr; // NDStore å­˜å‚¨çš„ UI ç»“æ„æ ‘ï¼ˆç”±å®ç°ä¾§è´Ÿè´£åˆ›å»º/é‡Šæ”¾ï¼‰
+    std::string dei_file_path_;          // DEI/YAML æ–‡ä»¶è·¯å¾„
 };
